@@ -9,7 +9,9 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -34,22 +36,35 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-//    compile 'com.jakewharton:butterknife:7.0.1'
+    //    compile files('libs/yichat_im_sdk.jar')
+//    compile files('libs/htmessage.jar')
+    // TinyPinyin核心包，约80KB
+//    compile 'com.google.android.gms:play-services-gcm:11.0.4'
+    //permissionsDispatcher
+//    compile 'pub.devrel:easypermissions:0.4.2'//easypermissions
 
-    compile files('libs/yichat_im_sdk.jar')
+    compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-
-    compile 'com.github.bumptech.glide:glide:3.7.0'//图片430kb 2678个方法
-    compile 'io.reactivex:rxandroid:1.2.1' //rxAndroid
-    compile 'io.reactivex:rxjava:1.1.6' //rxJava
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'//okHttp3
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-    compile 'com.squareup.retrofit2:retrofit:2.0.0' //retrofit2
+    compile 'com.squareup.retrofit2:retrofit:2.0.0'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'//内存泄漏
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    compile 'com.alibaba:fastjson:1.2.41'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.github.promeg:tinypinyin:2.0.3'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.hyphenate:hyphenate-sdk:3.3.0'
+    compile 'com.github.hotchemi:permissionsdispatcher:3.0.1'
+    compile 'pub.devrel:easypermissions:1.1.0'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
     testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 

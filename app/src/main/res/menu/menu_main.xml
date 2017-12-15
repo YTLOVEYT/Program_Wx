@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/icon_search"
+        android:title="搜索"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/groupChat"
+        android:icon="@drawable/icon_add_group"
+        android:title="发起群聊"
+        android:visible="true"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/addFriends"
+        android:icon="@drawable/icon_add_friend"
+        android:title="添加朋友"
+        android:visible="true"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/scan"
+        android:icon="@drawable/icon_menu_scan"
+        android:title="扫一扫"
+        android:visible="true"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/money"
+        android:icon="@drawable/icon_add_friend"
+        android:title="收付款"
+        android:visible="true"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/help"
+        android:icon="@drawable/icon_add_friend"
+        android:title="帮助与反馈"
+        android:visible="true"
+        app:showAsAction="never"
+        />
+
+</menu>
