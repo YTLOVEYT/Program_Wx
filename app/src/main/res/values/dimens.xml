@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="height_top_bar">48dp</dimen>
+    <dimen name="span_size">48dp</dimen>
+    <dimen name="sider_bar_textsize">18sp</dimen>
+
 </resources>

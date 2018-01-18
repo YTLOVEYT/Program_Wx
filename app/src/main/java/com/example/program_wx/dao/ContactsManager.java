@@ -74,7 +74,6 @@ public class ContactsManager
         {
             contacts = userDao.getContactList();
         }
-
         return contacts;
     }
 

@@ -2,7 +2,12 @@ package com.example.program_wx.activity.main;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +35,7 @@ import com.example.program_wx.widget.NoAnimViewPager;
 
 import java.lang.reflect.Method;
 
-public class MainActivity extends BaseActivity implements MainView
+public class MainActivity extends BaseActivity implements MainView, FragmentConversation.NewMessageListener, FragmentContacts.contactsListener
 {
     private Toolbar toolbar;
     private NoAnimViewPager viewPager;
@@ -90,7 +96,6 @@ public class MainActivity extends BaseActivity implements MainView
 
                         break;
                     case R.id.help:
-
                         break;
                 }
                 return true;
@@ -259,6 +264,41 @@ public class MainActivity extends BaseActivity implements MainView
         // FIXME: 2017/12/13
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        PackageManager pm = getPackageManager();
+        ResolveInfo homeInfo = pm.resolveActivity(
+                new Intent(Intent.ACTION_MAIN)
+                        .addCategory(Intent.CATEGORY_HOME), 0);
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            ActivityInfo ai = homeInfo.activityInfo;
+            Intent startIntent = new Intent(Intent.ACTION_MAIN);
+            startIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            startIntent
+                    .setComponent(new ComponentName(ai.packageName, ai.name));
+            startActivitySafely(startIntent);
+            return true;
+        }
+        else
+        {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+
+    private void startActivitySafely(Intent intent)
+    {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try
+        {
+            startActivity(intent);
+        }
+        catch (ActivityNotFoundException | SecurityException e)
+        {
+            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public void setPresenter(MainPresenter presenter)
@@ -333,4 +373,33 @@ public class MainActivity extends BaseActivity implements MainView
     {
         return this;
     }
+
+    /** 主页更新未读消息总数 */
+    @Override
+    public void onUnReadMessages(int count)
+    {
+        if (unreadLabel == null)
+        {
+            return;
+        }
+        if (count > 0)
+        {
+            unreadLabel.setVisibility(View.VISIBLE);
+            unreadLabel.setText(String.valueOf(count));
+        }
+        else
+        {
+            unreadLabel.setVisibility(View.GONE);
+        }
+    }
+
+    /** 主页更新未读联系人总数 */
+    @Override
+    public void showInvitation(int count)
+    {
+        // FIXME: 2018/1/15
+    }
+
+    /** 主页更新未读朋友圈总数 */
+
 }

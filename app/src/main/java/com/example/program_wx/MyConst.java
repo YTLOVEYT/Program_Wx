@@ -8,7 +8,7 @@ package com.example.program_wx;
 public class MyConst
 {
     //远程服务器
-    public static final String HOST = "http://120.55.182.220/api/"; //主网址
+    public static final String HOST = "http://47.96.36.201/api/"; //主网址
     public static final String URL_AVATAR = HOST + "upload/";
     public static final String URL_REGISTER = HOST + "register";//注册
     public static final String URL_LOGIN = HOST + "login";//登录
@@ -68,4 +68,9 @@ public class MyConst
 
     /*用户信息*/
     public static String SHARED_KEY_USER_INFO = "shared_key_user_info";
+
+    /** 本地广播 */
+    public static final String RECEIVE_NEW_MESSAGE = "com.example.program_wx.new_message";
+    public static final String RECEIVE_CMD_MESSAGE = "com.example.program_wx.cmd_message";
+    public static final String RECEIVE_INVITATION = "com.example.program_wx.invitation";
 }

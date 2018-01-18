@@ -2,6 +2,7 @@ package com.example.program_wx.activity.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.view.ViewTreeObserver;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -12,6 +13,7 @@ import com.example.program_wx.dao.ContactsManager;
 import com.example.program_wx.entity.Param;
 import com.example.program_wx.entity.User;
 import com.example.program_wx.utils.CommonOkHttpUtil;
+import com.example.program_wx.utils.CommonUtil;
 import com.example.program_wx.utils.LogUtil;
 import com.example.program_wx.utils.OkHttpUtil;
 import com.example.program_wx.utils.SpUtil;
@@ -49,15 +51,14 @@ public class LoginPresenter implements LoginManager.Presenter
         new OkHttpUtil(loginView.getBaseActivity()).post(MyConst.URL_LOGIN, params, new OkHttpUtil.HttpCallBack()
         {
             @Override
-            public void onResponse(String response)
+            public void onResponse(JSONObject response)
             {
-                JSONObject obj = JSON.parseObject(response);
-                LogUtil.e("obj=" + obj.toString());
-                int code = obj.getInteger("code");//返回码023
+                LogUtil.e("obj=" + response.toString());
+                int code = response.getInteger("code");//返回码023
                 switch (code)
                 {
                     case 1:
-                        JSONObject userObj = obj.getJSONObject("user");
+                        JSONObject userObj = response.getJSONObject("user");
                         JSONArray friends = userObj.getJSONArray("friend");
                         if (userObj.containsKey("friend"))
                         {
@@ -102,6 +103,7 @@ public class LoginPresenter implements LoginManager.Presenter
             @Override
             public void onFailure(String errorMsg)
             {
+                loginView.showToast("服务器繁忙");
                 loginView.cancelDialog();
             }
         });
@@ -135,8 +137,7 @@ public class LoginPresenter implements LoginManager.Presenter
                         else
                         {
                             loginView.showToast("登录成功");
-                            Intent intent = new Intent(loginView.getBaseActivity(),
-                                    MainActivity.class);
+                            Intent intent = new Intent(loginView.getBaseActivity(), MainActivity.class);
                             loginView.getBaseActivity().startActivity(intent);
                             loginView.getBaseActivity().finish();
                         }
@@ -185,6 +186,17 @@ public class LoginPresenter implements LoginManager.Presenter
     @Override
     public void start()
     {
-
+        CommonUtil.observeSoftKeyBoard(loginView.getBaseActivity(), new CommonUtil.OnSoftKeyboardChangeListener()
+        {
+            @Override
+            public void onSoftKeyBoardChange(int softKeybardHeight, boolean visible, ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener)
+            {
+                if (visible && softKeybardHeight > 0)
+                {
+                    SpUtil.saveInt("KEYBOARD_HEIGHT", softKeybardHeight);
+                    loginView.getBaseActivity().getWindow().getDecorView().getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
+                }
+            }
+        });
     }
 }

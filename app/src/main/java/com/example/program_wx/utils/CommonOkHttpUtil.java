@@ -24,14 +24,9 @@ public class CommonOkHttpUtil
         new OkHttpUtil(context).post(MyConst.URL_SEND_LOCAL_LOGIN_TIME, params, new OkHttpUtil.HttpCallBack()
         {
             @Override
-            public void onResponse(String response)
+            public void onResponse(JSONObject response)
             {
-                if (response.startsWith("<!DOCTYPE html>"))
-                {
-                    return;
-                }
-                JSONObject jsonObject = JSONObject.parseObject(response);
-                int code = jsonObject.getIntValue("code");
+                int code = response.getIntValue("code");
                 switch (code)
                 {
                     case 1:

@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_CALENDAR"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -60,7 +61,9 @@
             </intent-filter>
         </activity>
         <!-- 主界面 -->
-        <activity android:name=".activity.main.MainActivity">
+        <activity
+            android:name=".activity.main.MainActivity"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name=".activity.login.LoginActivity">
             <intent-filter>
@@ -83,7 +86,10 @@
         <activity android:name=".test.ThirdTestRxActivity">
         </activity>
         <activity android:name=".test.mvp.login.view.MvpLoginActivity">
-
+        </activity>
+        <activity android:name=".activity.chat.ChatActivity">
+        </activity>
+        <activity android:name=".test.FourTestActivity">
         </activity>
     </application>
 

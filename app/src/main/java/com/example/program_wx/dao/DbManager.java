@@ -96,6 +96,7 @@ public class DbManager
 
     /**
      * 删除联系人
+     *
      * @param username 联系人的唯一用户名
      */
     synchronized public void deleteContact(String username)
@@ -109,6 +110,7 @@ public class DbManager
 
     /**
      * 保存联系人
+     *
      * @param user 联系人
      */
     synchronized public void saveContact(User user)

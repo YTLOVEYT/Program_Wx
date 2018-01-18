@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.program_wx.MyConst;
 import com.example.program_wx.entity.Param;
 
@@ -75,8 +76,18 @@ public class OkHttpUtil
             switch (msg.what)
             {
                 case SUCCESSFUL:
-                    LogUtil.e("网络请求response=" + (String) msg.obj);
-                    httpCallBack.onResponse((String) msg.obj);
+                    LogUtil.e("网络请求response=" + msg.obj);
+                    try
+                    {
+                        JSONObject object = JSONObject.parseObject((String) msg.obj);
+                        httpCallBack.onResponse(object);
+                        // FIXME: 2018/1/15 重复登录弹出
+                    }
+                    catch (Exception e)
+                    {
+                        httpCallBack.onFailure((String) msg.obj);
+                        e.printStackTrace();
+                    }
                     break;
                 case FAILED:
                     httpCallBack.onFailure((String) msg.obj);
@@ -91,6 +102,7 @@ public class OkHttpUtil
 
     /**
      * 普通post请求
+     *
      * @param url          地址
      * @param params       参数
      * @param httpCallBack 回调
@@ -120,6 +132,7 @@ public class OkHttpUtil
 
     /**
      * 带文件的post的请求
+     *
      * @param url          地址
      * @param params       参数
      * @param files        文件地址
@@ -167,7 +180,7 @@ public class OkHttpUtil
                 {
                     Message message = handler.obtainMessage();
                     message.obj = e.getMessage();
-                    message.what=FAILED;
+                    message.what = FAILED;
                     message.sendToTarget();
                 }
 
@@ -177,7 +190,7 @@ public class OkHttpUtil
                     LogUtil.e("网络请求response=" + response);
                     // FIXME: 2017/12/8 网络请求中如果包含session 则说明账号在异地登录，强制下线 ywkk123
                     Message message = handler.obtainMessage();
-                    message.what=SUCCESSFUL;
+                    message.what = SUCCESSFUL;
                     message.obj = response.body().string();
                     LogUtil.e("网络请求response=" + (String) message.obj);
                     message.sendToTarget();
@@ -207,7 +220,7 @@ public class OkHttpUtil
     public interface HttpCallBack
     {
         /** 网络访问正确回调 */
-        void onResponse(String response);
+        void onResponse(JSONObject response);
 
         /** 网络访问错误回调 */
         void onFailure(String errorMsg);

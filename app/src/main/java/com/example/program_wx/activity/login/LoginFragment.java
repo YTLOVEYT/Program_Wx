@@ -46,8 +46,7 @@ public class LoginFragment extends Fragment implements LoginManager.View, View.O
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         initView(view);
@@ -197,5 +196,12 @@ public class LoginFragment extends Fragment implements LoginManager.View, View.O
     public void showToast(String msg)
     {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        loginPresenter.start();
     }
 }

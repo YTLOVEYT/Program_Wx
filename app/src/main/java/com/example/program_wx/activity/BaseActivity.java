@@ -45,4 +45,19 @@ public class BaseActivity extends AppCompatActivity
             view.setVisibility(View.GONE);
         }
     }
+
+    /** 显示右边的图标 */
+    public void showRightView(int res, View.OnClickListener listener)
+    {
+        ImageView ivRight = (ImageView) this.findViewById(R.id.iv_right);
+        if (ivRight != null)
+        {
+            ivRight.setImageResource(res);
+            ivRight.setVisibility(View.VISIBLE);
+            if (listener != null)
+            {
+                ivRight.setOnClickListener(listener);
+            }
+        }
+    }
 }

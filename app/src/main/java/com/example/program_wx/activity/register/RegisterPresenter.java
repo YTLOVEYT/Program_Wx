@@ -80,15 +80,14 @@ public class RegisterPresenter implements RegisterManager.Presenter
         new OkHttpUtil(registerView.getBaseActivity()).post(MyConst.URL_REGISTER, params, new OkHttpUtil.HttpCallBack()
         {
             @Override
-            public void onResponse(String response)
+            public void onResponse(JSONObject response)
             {
-                JSONObject obj = JSON.parseObject(response);
-                LogUtil.e("obj=" + obj.toString());
-                int code = obj.getInteger("code");//返回码023
+                LogUtil.e("obj=" + response.toString());
+                int code = response.getInteger("code");//返回码023
                 switch (code)
                 {
                     case 1:
-                        JSONObject userObj = obj.getJSONObject("user");
+                        JSONObject userObj = response.getJSONObject("user");
                         if (userObj != null)
                         {
                             try
